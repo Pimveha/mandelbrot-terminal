@@ -1,4 +1,6 @@
 import numpy as np
+from time import sleep
+import os
 
 # gradient = " ░▒▓█"
 gradient = " ·-+=*≡#@"
@@ -38,11 +40,27 @@ def terminal_mandel(x_lower, x_upper, step, depth=100):
     # for map(lambda x: x/10.0, range(5, 50, 15))
 
 
-def main():
-    # print(mandelbrot(-1+2j, 100))
-    # print(mandelbrot(.1+.1j, 100))
+def make_mandel(rows, cols, depth=100):
+    real_part = np.linspace(-2, 0.6, rows)
+    imag_part = np.linspace(-1.2, 1.2, cols)
+    real_mesh, imag_mesh = np.meshgrid(real_part, imag_part)
+    complex_array = real_mesh + 1j * imag_mesh
+    jump = depth // (len(gradient)-1)
+    for row in enumerate(complex_array):
+        x_arr = []
+        for elem in enumerate(row):
+            x_arr.append(gradient[(mandelbrot(elem) // jump)])
+            # gradient[(mandelbrot(elem) // jump)]
+        print("".join(x_arr))
 
-    terminal_mandel(-2.4, 2, 0.1)
+
+def main():
+    # cols, rows = os.get_terminal_size()
+    # center_x, center_y = rows//2, cols//2
+    while True:
+        cols, rows = os.get_terminal_size()
+        make_mandel(cols, rows, depth=100)
+        sleep(10)
 
 
 if __name__ == '__main__':
