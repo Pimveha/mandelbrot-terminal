@@ -16,7 +16,6 @@ def mandelbrot(c, depth=100):
     i = 0
     while i < depth:
         z = pow(z, 2) + c
-        # z = z**2 + c
         if abs(z) > 10000:
             return i
         i += 1
@@ -37,24 +36,6 @@ def mandelbrot_pretty(c, depth=100):
     val = int(1/((1/depth)+(1.1**-i)))
     # print(f'max value = {depth}\n{jump=}\n{len(gradient)=}\n{val=}\n{(val // jump)=}')
     return gradient[int(val // jump)]
-
-
-def transform(x):
-    return 1/((1/len(gradient))+(2**-x))
-
-
-def terminal_mandel(x_lower, x_upper, step, depth=100):
-    real_part = np.linspace(-2, 0.6, 100)
-    imag_part = np.linspace(-1.2, 1.2, 100)
-    real_mesh, imag_mesh = np.meshgrid(real_part, imag_part)
-    complex_array = real_mesh + 1j * imag_mesh
-    # print(complex_array)
-    jump = depth // (len(gradient)-1)
-    for row in complex_array:
-        x_arr = []
-        for elem in row:
-            x_arr.append(gradient[(mandelbrot(elem) // jump)]*2)
-        print("".join(x_arr))
 
 
 def make_mandel(rows, cols, zoom=1, x=0, y=0, depth=100):
