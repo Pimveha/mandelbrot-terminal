@@ -2,7 +2,7 @@
 
 This Python script generates and visualizes the Mandelbrot Set in the terminal using ASCII characters. It allows interactive exploration of the set by zooming in, zooming out, and moving around.
 
-High Resolution entire parameter space  |  High Resolution zoomed in
+High Resolution entire parameter space  |  Low Resolution zoomed in
 :-------------------------:|:-------------------------:
 ![](https://github.com/Pimveha/mandolbrot-terminal/assets/38813670/abcab3a6-77d1-4b67-b556-14b05ce505b8)  |  ![low_res1](https://github.com/Pimveha/mandolbrot-terminal/assets/38813670/5f14fdae-b0a7-41f8-8a90-143be24cb982)
 
