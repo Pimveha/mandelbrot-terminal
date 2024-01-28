@@ -1,11 +1,13 @@
 import numpy as np
-from time import sleep
 import os
 from getkey import getkey, keys
 
-# gradient = " ░▒▓█"
-gradient = " ·-+=*≡#@"
-# gradient = " ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@"
+# gradient = " ░▒▓█ ░▒▓█ ░▒▓█ ░▒▓█"
+# gradient = " ·-+=*≡#@"
+gradient = " ·-+=*≡# @"
+# gradient = " █"*30
+# gradient = "`.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{\C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@"
+# gradient = " ·-+=*≡#@"*20
 # gradient = " ▪️"
 
 
@@ -22,23 +24,19 @@ def mandelbrot(c, depth=100):
 
 
 def mandelbrot_pretty(c, depth=100):
-    jump = depth // (len(gradient)-1)
-    # jump = depth // (len(gradient)-(len(gradient)//9))
+    jump = depth / (len(gradient))
     z = 0
     i = 0
     while i < depth:
         z = pow(z, 2) + c
-        if abs(z) > 10000:
-            # val = int(1/((1/len(gradient))+(2**-i)))
+        if abs(z) > 10000:  # inf
+            # transformed using sigmoid function
             val = int(1/((1/depth)+(1.1**-i)))
-            # val = int(1/((1/depth)+(1.3**-i)))
-            # print(val)
-            return gradient[val // jump]
+            return gradient[int(val // jump)]
         i += 1
-    # val = int(1/((1/depth)+(1.3**-i)))
     val = int(1/((1/depth)+(1.1**-i)))
-    # print(val)
-    return gradient[val // jump]
+    # print(f'max value = {depth}\n{jump=}\n{len(gradient)=}\n{val=}\n{(val // jump)=}')
+    return gradient[int(val // jump)]
 
 
 def transform(x):
@@ -58,10 +56,6 @@ def terminal_mandel(x_lower, x_upper, step, depth=100):
             x_arr.append(gradient[(mandelbrot(elem) // jump)]*2)
         print("".join(x_arr))
 
-    # print("".join(x_arr))
-
-    # for map(lambda x: x/10.0, range(5, 50, 15))
-
 
 def make_mandel(rows, cols, zoom=1, x=0, y=0, depth=100):
 
@@ -74,23 +68,18 @@ def make_mandel(rows, cols, zoom=1, x=0, y=0, depth=100):
     imag_part = np.linspace(y_top, y_bot, cols)
     real_mesh, imag_mesh = np.meshgrid(real_part, imag_part)
     complex_array = real_mesh + 1j * imag_mesh
-    jump = depth // (len(gradient)-1)
     mandel = vectorized_mandelbrot_pretty(complex_array)
     for row in mandel:
         print(''.join(row))
 
 
 def main():
-    # cols, rows = os.get_terminal_size()
-    # center_x, center_y = rows//2, cols//2
-
     zoom = 1
     x = 0
     y = 0
     while True:
         cols, rows = os.get_terminal_size()
         make_mandel(cols, rows, depth=100, zoom=zoom, x=x, y=y)
-        # user = input()
         user = getkey()
         if user == "a":
             x -= (1/zoom)
