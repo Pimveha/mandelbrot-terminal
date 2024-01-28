@@ -1,10 +1,11 @@
 import numpy as np
 from time import sleep
 import os
+from getkey import getkey, keys
 
 # gradient = " ░▒▓█"
 gradient = " ·-+=*≡#@"
-# gradient = " ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@"*2
+# gradient = " ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@ ·-+=*≡#@"
 # gradient = " ▪️"
 
 
@@ -22,8 +23,7 @@ def mandelbrot(c, depth=100):
 
 def mandelbrot_pretty(c, depth=100):
     jump = depth // (len(gradient)-1)
-    # jump = depth // (len(gradient)-(len(gradient)//2))
-    # jump = depth // (len(gradient)-(len(gradient)//5))
+    # jump = depth // (len(gradient)-(len(gradient)//9))
     z = 0
     i = 0
     while i < depth:
@@ -90,7 +90,8 @@ def main():
     while True:
         cols, rows = os.get_terminal_size()
         make_mandel(cols, rows, depth=100, zoom=zoom, x=x, y=y)
-        user = input()
+        # user = input()
+        user = getkey()
         if user == "a":
             x -= (1/zoom)
         elif user == "d":
